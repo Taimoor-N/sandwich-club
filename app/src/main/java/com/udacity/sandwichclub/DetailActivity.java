@@ -3,6 +3,7 @@ package com.udacity.sandwichclub;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -71,6 +72,8 @@ public class DetailActivity extends AppCompatActivity {
         populateUI(sandwich);
         Picasso.with(this)
                 .load(sandwich.getImage())
+                //.placeholder() -> To add a placeholder while image is loading
+                .error(R.drawable.no_image_available)
                 .into(mSandwichImage);
 
         setTitle(sandwich.getMainName());
@@ -111,10 +114,8 @@ public class DetailActivity extends AppCompatActivity {
             mAlsoKnownAsLinearLayout.setVisibility(View.VISIBLE);
 
             for (int i = 0; i < alsoKnown.size(); i++) {
-                mAlsoKnownAsTextView.append(alsoKnown.get(i));
-                if (i < (alsoKnown.size() - 1)) {
-                    mAlsoKnownAsTextView.append("\n");
-                }
+                mAlsoKnownAsTextView.setText(TextUtils.join(", ", alsoKnown));
+                mAlsoKnownAsTextView.append(".");
             }
         } else {
             mAlsoKnownAsLinearLayout.setVisibility(View.GONE);
@@ -125,10 +126,8 @@ public class DetailActivity extends AppCompatActivity {
             mIngredientsLinearLayout.setVisibility(View.VISIBLE);
 
             for (int i = 0; i < ingredients.size(); i++) {
-                mIngredientsTextView.append(ingredients.get(i));
-                if (i < (ingredients.size() - 1)) {
-                    mIngredientsTextView.append("\n");
-                }
+                mIngredientsTextView.setText(TextUtils.join(", ", ingredients));
+                mIngredientsTextView.append(".");
             }
         } else {
             mIngredientsLinearLayout.setVisibility(View.GONE);
